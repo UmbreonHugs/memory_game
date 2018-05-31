@@ -38,7 +38,7 @@ function checkCards(t) {
       openedCards = []; // clear that list
     } else {
       alert("WRONG!");
-      $(openedCards[0], openedCards[1]).removeClass("match");
+      $(".card").removeClass('match');
       openedCards = []; // clear that list
     }
   }
@@ -50,8 +50,8 @@ $(".card").click(function() {
   var thisCard = $(this).find('i').attr("class").split(' ')[1];
   openedCards.push(thisCard);
   checkCards(this);
-  console.log(thisCard);
-  console.log(openedCards);
+  //console.log(thisCard);
+  //console.log(openedCards);
 });
 
 /*
