@@ -26,6 +26,7 @@ function shuffle(array) {
 }
 // set default variables
 var openedCards = [];
+var moves = 0;
 // remove the card from previous arrays
 function reverseCard() {
 
@@ -44,11 +45,14 @@ function checkCards(t) {
   }
 }
 function updateMoves() {
+  moves = moves + 1;
+  document.getElementsByClassName('moves').innerHTML == moves;
 }
 $(".card").click(function() {
   $(this).addClass("match");
   var thisCard = $(this).find('i').attr("class").split(' ')[1];
   openedCards.push(thisCard);
+  updateMoves()
   checkCards(this);
   //console.log(thisCard);
   //console.log(openedCards);
