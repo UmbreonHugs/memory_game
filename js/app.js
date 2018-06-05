@@ -45,19 +45,22 @@ function flipCard(t) {
 }
 cardsAll.forEach(function(card) {
     card.addEventListener('click', function(e) {
-      card.classList.add('open', 'show');
-      openedCards.push(card)
-      if (openedCards.length > 1) {
-        setTimeout(function(){
-          openedCards.forEach(function(card){
-            card.classList.remove('open', 'show');
-          });
-          openedCards = [];
-        }, 1000);
-      } else {
+      // prevent double clicking
+      if (!card.classList.contains('open') || !card.classList.contains('show') || !card.classList.contains('match')) {
+        card.classList.add('open', 'show');
+        openedCards.push(card)
+        if (openedCards.length > 1) {
+          setTimeout(function(){
+            openedCards.forEach(function(card){
+              card.classList.remove('open', 'show');
+            });
+            openedCards = [];
+          }, 1000);
+        } else {
 
+        }
       }
-  });
+    });
 });
 
 /*
