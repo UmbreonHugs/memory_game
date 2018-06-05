@@ -25,37 +25,28 @@ function shuffle(array) {
     return array;
 }
 // set default variables
+var cardsAll = document.querySelectorAll('.card');
 var openedCards = [];
 var moves = 0;
+var totalClicks = 0;
+var gameStart = false;
 // remove the card from previous arrays
 function reverseCard() {
 
 }
 function checkCards(t) {
-  // only check if the length is exactly 2
-  if (openedCards.length == 2) {
-    if (openedCards[0] == openedCards[1]) {
-      alert("RIGHT!");
-      openedCards = []; // clear that list
-    } else {
-      alert("WRONG!");
-      $(".card").removeClass('match');
-      openedCards = []; // clear that list
-    }
-  }
+
 }
 function updateMoves() {
-  moves = moves + 1;
-  document.getElementsByClassName('moves').innerHTML == moves;
 }
-$(".card").click(function() {
-  $(this).addClass("match");
-  var thisCard = $(this).find('i').attr("class").split(' ')[1];
-  openedCards.push(thisCard);
-  updateMoves()
-  checkCards(this);
-  //console.log(thisCard);
-  //console.log(openedCards);
+function flipCard(t) {
+  $(t).addClass("open");
+  $(t).addClass("show");
+}
+cardsAll.forEach(function(card) {
+  card.addEventListener('click', function(e) {
+    card.classList.add('open', 'show')
+  });
 });
 
 /*
