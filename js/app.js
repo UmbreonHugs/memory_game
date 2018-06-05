@@ -44,8 +44,19 @@ function flipCard(t) {
   $(t).addClass("show");
 }
 cardsAll.forEach(function(card) {
-  card.addEventListener('click', function(e) {
-    card.classList.add('open', 'show')
+    card.addEventListener('click', function(e) {
+      card.classList.add('open', 'show');
+      openedCards.push(card)
+      if (openedCards.length > 1) {
+        setTimeout(function(){
+          openedCards.forEach(function(card){
+            card.classList.remove('open', 'show');
+          });
+          openedCards = [];
+        }, 1000);
+      } else {
+
+      }
   });
 });
 
