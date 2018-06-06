@@ -25,11 +25,15 @@ function shuffle(array) {
     return array;
 }
 // set default variables
+var cards = ['fa-diamond', 'fa-diamond', 'fa-paper-plane-o', 'fa-paper-plane-o', 'fa-anchor', 'fa-anchor', 'fa-bolt', 'fa-bolt', 'fa-cube', 'fa-cube', 'fa-leaf', 'fa-leaf', 'fa-bomb', 'fa-bomb', 'fa-bicycle', 'fa-bicycle']
 var cardsAll = document.querySelectorAll('.card');
 var openedCards = [];
 var moves = 0;
 var totalClicks = 0;
 var gameStart = false;
+function loadGame() {
+
+}
 // remove the card from previous arrays
 function reverseCard() {
 
@@ -46,16 +50,30 @@ function flipCard(t) {
 cardsAll.forEach(function(card) {
     card.addEventListener('click', function(e) {
       // prevent double clicking
-      if (!card.classList.contains('open') || !card.classList.contains('show') || !card.classList.contains('match')) {
+      if (!card.classList.contains('open') && !card.classList.contains('show') && !card.classList.contains('match')) {
         card.classList.add('open', 'show');
         openedCards.push(card)
+
+        // check icon
+        var firstCardType = openedCards[0].querySelector('i').classList.item(1);
+        console.log(firstCardType);
+
         if (openedCards.length > 1) {
-          setTimeout(function(){
-            openedCards.forEach(function(card){
-              card.classList.remove('open', 'show');
-            });
-            openedCards = [];
-          }, 1000);
+            setTimeout(function(){
+              if (openedCards[0] == openedCards[1]) {
+                openedCards.forEach(function(card){
+                  card.classList.remove('open', 'show');
+                });
+                alert("CORRECT!")
+                openedCards = [];
+              } else {
+                openedCards.forEach(function(card){
+                  card.classList.remove('open', 'show');
+                });
+                alert("WRONG!")
+                openedCards = [];
+              }
+            }, 1000);
         } else {
 
         }
