@@ -28,11 +28,23 @@ function shuffle(array) {
 var cards = ['fa-diamond', 'fa-diamond', 'fa-paper-plane-o', 'fa-paper-plane-o', 'fa-anchor', 'fa-anchor', 'fa-bolt', 'fa-bolt', 'fa-cube', 'fa-cube', 'fa-leaf', 'fa-leaf', 'fa-bomb', 'fa-bomb', 'fa-bicycle', 'fa-bicycle']
 var cardsAll = document.querySelectorAll('.card');
 var openedCards = [];
+var openedIcons = [];
 var moves = 0;
 var totalClicks = 0;
 var gameStart = false;
-function loadGame() {
+var deck = document.querySelectorAll('.deck');
 
+function loadGame() {
+  var cardHTML = cards.map(function(card) {
+      return buildDeck(card);
+  });
+  // deck.innerHTML = card.join('')
+  console.log(cardHTML)
+}
+loadGame();
+function buildDeck(card) {
+  template = `<li class="card"><i class="fa ${card}"></i></li>`
+  return template;
 }
 // remove the card from previous arrays
 function reverseCard() {
@@ -60,19 +72,19 @@ cardsAll.forEach(function(card) {
 
         if (openedCards.length > 1) {
             setTimeout(function(){
-              if (openedCards[0] == openedCards[1]) {
+            //  if (openedCards[0] == openedCards[1]) {
                 openedCards.forEach(function(card){
                   card.classList.remove('open', 'show');
                 });
-                alert("CORRECT!")
+                // alert("CORRECT!")
                 openedCards = [];
-              } else {
+          /*    } else {
                 openedCards.forEach(function(card){
                   card.classList.remove('open', 'show');
                 });
                 alert("WRONG!")
                 openedCards = [];
-              }
+              } */
             }, 1000);
         } else {
 
