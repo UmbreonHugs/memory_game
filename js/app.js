@@ -32,18 +32,18 @@ var openedIcons = [];
 var moves = 0;
 var totalClicks = 0;
 var gameStart = false;
-var deck = document.querySelectorAll('.deck');
+var deck = document.querySelector('.deck');
 
 function loadGame() {
   var cardHTML = cards.map(function(card) {
       return buildDeck(card);
   });
-  // deck.innerHTML = card.join('')
-  console.log(cardHTML)
+  deck.innerHTML = cardHTML.join('');
+  //console.log(cardHTML)
 }
 loadGame();
 function buildDeck(card) {
-  template = `<li class="card"><i class="fa ${card}"></i></li>`
+  template = `<li class="card"><i class="fa ${card}" data-icon="${card}"></i></li>`
   return template;
 }
 // remove the card from previous arrays
@@ -54,10 +54,6 @@ function checkCards(t) {
 
 }
 function updateMoves() {
-}
-function flipCard(t) {
-  $(t).addClass("open");
-  $(t).addClass("show");
 }
 cardsAll.forEach(function(card) {
     card.addEventListener('click', function(e) {
@@ -70,7 +66,10 @@ cardsAll.forEach(function(card) {
         var firstCardType = openedCards[0].querySelector('i').classList.item(1);
         console.log(firstCardType);
 
-        if (openedCards.length > 1) {
+        if (openedCards.length == 2) {
+          if (openedCards[0].dataset.icon == openedCards[1].dataset.icon) {
+            console.log("CORRECT");
+          } else {
             setTimeout(function(){
             //  if (openedCards[0] == openedCards[1]) {
                 openedCards.forEach(function(card){
@@ -86,8 +85,7 @@ cardsAll.forEach(function(card) {
                 openedCards = [];
               } */
             }, 1000);
-        } else {
-
+          }
         }
       }
     });
