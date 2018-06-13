@@ -26,54 +26,56 @@ function shuffle(array) {
 }
 // set default variables
 var cards = ['fa-diamond', 'fa-diamond', 'fa-paper-plane-o', 'fa-paper-plane-o', 'fa-anchor', 'fa-anchor', 'fa-bolt', 'fa-bolt', 'fa-cube', 'fa-cube', 'fa-leaf', 'fa-leaf', 'fa-bomb', 'fa-bomb', 'fa-bicycle', 'fa-bicycle']
-var cardsAll = document.querySelectorAll('.card');
 var openedCards = [];
 var openedIcons = [];
-var moves = 0;
 var totalClicks = 0;
 var gameStart = false;
 var deck = document.querySelector('.deck');
+var moves = 0;
+var moveSelector = document.querySelector('.moves');
 
 function loadGame() {
-  var cardHTML = cards.map(function(card) {
+  var cardHTML = shuffle(cards).map(function(card) {
       return buildDeck(card);
   });
+  moves = 0
   deck.innerHTML = cardHTML.join('');
+  moveSelector.innerText = moves;
   //console.log(cardHTML)
 }
-loadGame();
 function buildDeck(card) {
-  template = `<li class="card"><i class="fa ${card}" data-icon="${card}"></i></li>`
+  template = `<li class="card" data-icon="${card}"><i class="fa ${card}"></i></li>`
   return template;
 }
+loadGame();
 // remove the card from previous arrays
-function reverseCard() {
-
-}
-function checkCards(t) {
-
-}
-function updateMoves() {
-}
+var cardsAll = document.querySelectorAll('.card');
 cardsAll.forEach(function(card) {
     card.addEventListener('click', function(e) {
       // prevent double clicking
       if (!card.classList.contains('open') && !card.classList.contains('show') && !card.classList.contains('match')) {
-        card.classList.add('open', 'show');
-        openedCards.push(card)
-
+        card.classList.add('open', 'show', 'animated', 'flipInY');
+        openedCards.push(card);
         // check icon
         var firstCardType = openedCards[0].querySelector('i').classList.item(1);
         console.log(firstCardType);
 
         if (openedCards.length == 2) {
+            openedCards[1].classList.remove('animated', 'flipInY');
+            openedCards[0].classList.remove('animated', 'flipInY');
           if (openedCards[0].dataset.icon == openedCards[1].dataset.icon) {
+            openedCards[0].classList.add('match', 'open', 'show', 'animated', 'pulse');
+            openedCards[1].classList.add('match', 'open', 'show', 'animated', 'pulse');
+            openedCards = [];
             console.log("CORRECT");
           } else {
+            console.log("WRONG");
+            openedCards[0].classList.add('animated', 'shake', 'wrong');
+            openedCards[1].classList.add('animated', 'shake', 'wrong');
             setTimeout(function(){
             //  if (openedCards[0] == openedCards[1]) {
                 openedCards.forEach(function(card){
-                  card.classList.remove('open', 'show');
+                  card.classList.remove('open', 'show', 'animated', 'shake', 'wrong', 'flipInY');
                 });
                 // alert("CORRECT!")
                 openedCards = [];
@@ -86,6 +88,8 @@ cardsAll.forEach(function(card) {
               } */
             }, 1000);
           }
+          moves += 1;
+          moveSelector.innerText = moves;
         }
       }
     });
