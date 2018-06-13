@@ -67,26 +67,15 @@ cardsAll.forEach(function(card) {
             openedCards[0].classList.add('match', 'open', 'show', 'animated', 'pulse');
             openedCards[1].classList.add('match', 'open', 'show', 'animated', 'pulse');
             openedCards = [];
-            console.log("CORRECT");
           } else {
-            console.log("WRONG");
             openedCards[0].classList.add('animated', 'shake', 'wrong');
             openedCards[1].classList.add('animated', 'shake', 'wrong');
             setTimeout(function(){
-            //  if (openedCards[0] == openedCards[1]) {
                 openedCards.forEach(function(card){
                   card.classList.remove('open', 'show', 'animated', 'shake', 'wrong', 'flipInY');
                 });
-                // alert("CORRECT!")
                 openedCards = [];
-          /*    } else {
-                openedCards.forEach(function(card){
-                  card.classList.remove('open', 'show');
-                });
-                alert("WRONG!")
-                openedCards = [];
-              } */
-            }, 1000);
+            }, 800);
           }
           moves += 1;
           moveSelector.innerText = moves;
