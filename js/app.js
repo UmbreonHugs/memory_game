@@ -33,12 +33,14 @@ var gameStart = false;
 var deck = document.querySelector('.deck');
 var moves = 0;
 var moveSelector = document.querySelector('.moves');
+var stars = 3 // default star amount
+var starsSelector = document.querySelector('stars');
 
 function loadGame() {
   var cardHTML = shuffle(cards).map(function(card) {
       return buildDeck(card);
   });
-  moves = 0
+  moves = 0;
   deck.innerHTML = cardHTML.join('');
   moveSelector.innerText = moves;
   //console.log(cardHTML)
@@ -75,7 +77,7 @@ cardsAll.forEach(function(card) {
                   card.classList.remove('open', 'show', 'animated', 'shake', 'wrong', 'flipInY');
                 });
                 openedCards = [];
-            }, 800);
+            }, 1100);
           }
           moves += 1;
           moveSelector.innerText = moves;
