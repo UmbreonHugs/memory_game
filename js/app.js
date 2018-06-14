@@ -58,60 +58,59 @@ function buildDeck(card) {
 }
 function resetGame() {
   // reset variables
-  var cardsAll = document.querySelectorAll('.card');
   deck.innerHTML = "";
-  var openedCards = [];
-  var openedIcons = [];
-  var moves = 0;
-  var stars = 3;
-  moveSelector.innerText = moves;
-  starsSelector.innerHTML = buildStars(3);
+  openedCards = [];
+  openedIcons = [];
+  moves = 0;
+  stars = 3;
   loadGame();
+  cardEvent();
+}
+// remove the card from previous arrays
+function cardEvent() {
+  var cardsAll = document.querySelectorAll('.card');
+  cardsAll.forEach(function(card) {
+      card.addEventListener('click', function(e) {
+        // prevent double clicking
+        if (!card.classList.contains('open') && !card.classList.contains('show') && !card.classList.contains('match')) {
+          card.classList.add('open', 'show', 'animated', 'flipInY');
+          openedCards.push(card);
+          // check icon
+          var firstCardType = openedCards[0].querySelector('i').classList.item(1);
+          console.log(firstCardType);
+
+          if (openedCards.length == 2) {
+              openedCards[1].classList.remove('animated', 'flipInY');
+              openedCards[0].classList.remove('animated', 'flipInY');
+            if (openedCards[0].dataset.icon == openedCards[1].dataset.icon) {
+              openedCards[0].classList.add('match', 'open', 'show', 'animated', 'pulse');
+              openedCards[1].classList.add('match', 'open', 'show', 'animated', 'pulse');
+              openedCards = [];
+            } else {
+              openedCards[0].classList.add('animated', 'shake', 'wrong');
+              openedCards[1].classList.add('animated', 'shake', 'wrong');
+              setTimeout(function(){
+                  openedCards.forEach(function(card){
+                    card.classList.remove('open', 'show', 'animated', 'shake', 'wrong', 'flipInY');
+                  });
+                  openedCards = [];
+              }, 1100);
+            }
+            moves += 1;
+            // check moves, remove stars
+            if (moves == 12) {
+                starsSelector.innerHTML = buildStars(2);
+            } else if (moves == 24) {
+                starsSelector.innerHTML = buildStars(1);
+            }
+            moveSelector.innerText = moves;
+          }
+        }
+      });
+  });
 }
 loadGame();
-// remove the card from previous arrays
-var cardsAll = document.querySelectorAll('.card');
-cardsAll.forEach(function(card) {
-    card.addEventListener('click', function(e) {
-      // prevent double clicking
-      if (!card.classList.contains('open') && !card.classList.contains('show') && !card.classList.contains('match')) {
-        card.classList.add('open', 'show', 'animated', 'flipInY');
-        openedCards.push(card);
-        // check icon
-        var firstCardType = openedCards[0].querySelector('i').classList.item(1);
-        console.log(firstCardType);
-
-        if (openedCards.length == 2) {
-            openedCards[1].classList.remove('animated', 'flipInY');
-            openedCards[0].classList.remove('animated', 'flipInY');
-          if (openedCards[0].dataset.icon == openedCards[1].dataset.icon) {
-            openedCards[0].classList.add('match', 'open', 'show', 'animated', 'pulse');
-            openedCards[1].classList.add('match', 'open', 'show', 'animated', 'pulse');
-            openedCards = [];
-          } else {
-            openedCards[0].classList.add('animated', 'shake', 'wrong');
-            openedCards[1].classList.add('animated', 'shake', 'wrong');
-            setTimeout(function(){
-                openedCards.forEach(function(card){
-                  card.classList.remove('open', 'show', 'animated', 'shake', 'wrong', 'flipInY');
-                });
-                openedCards = [];
-            }, 1100);
-          }
-          moves += 1;
-          // check moves, remove stars
-          if (moves == 12) {
-              starsSelector.innerHTML = buildStars(2);
-          } else if (moves == 24) {
-              starsSelector.innerHTML = buildStars(1);
-          }
-          moveSelector.innerText = moves;
-        }
-      }
-    });
-});
-
-
+cardEvent();
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
