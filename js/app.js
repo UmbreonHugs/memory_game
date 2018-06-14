@@ -47,7 +47,6 @@ function loadGame() {
   var cardHTML = shuffle(cards).map(function(card) {
       return buildDeck(card);
   });
-  moves = 0;
   deck.innerHTML = cardHTML.join('');
   moveSelector.innerText = moves;
   starsSelector.innerHTML = buildStars(3);
@@ -56,6 +55,18 @@ function loadGame() {
 function buildDeck(card) {
   template = `<li class="card" data-icon="${card}"><i class="fa ${card}"></i></li>`
   return template;
+}
+function resetGame() {
+  // reset variables
+  var cardsAll = document.querySelectorAll('.card');
+  deck.innerHTML = "";
+  var openedCards = [];
+  var openedIcons = [];
+  var moves = 0;
+  var stars = 3;
+  moveSelector.innerText = moves;
+  starsSelector.innerHTML = buildStars(3);
+  loadGame();
 }
 loadGame();
 // remove the card from previous arrays
@@ -99,6 +110,7 @@ cardsAll.forEach(function(card) {
       }
     });
 });
+
 
 /*
  * set up the event listener for a card. If a card is clicked:
