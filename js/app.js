@@ -33,9 +33,16 @@ var gameStart = false;
 var deck = document.querySelector('.deck');
 var moves = 0;
 var moveSelector = document.querySelector('.moves');
-var stars = 3 // default star amount
-var starsSelector = document.querySelector('stars');
+var stars = 3; // default star amount
+var starsSelector = document.querySelector('.stars');
 
+function buildStars(n) {
+  var starHTML = ``;
+  for (var i=0; i<n; i++) {
+    starHTML += `<li><i class="fa fa-star"></i></li>`;
+  }
+  return starHTML;
+}
 function loadGame() {
   var cardHTML = shuffle(cards).map(function(card) {
       return buildDeck(card);
@@ -43,6 +50,7 @@ function loadGame() {
   moves = 0;
   deck.innerHTML = cardHTML.join('');
   moveSelector.innerText = moves;
+  starsSelector.innerHTML = buildStars(3);
   //console.log(cardHTML)
 }
 function buildDeck(card) {
@@ -80,6 +88,12 @@ cardsAll.forEach(function(card) {
             }, 1100);
           }
           moves += 1;
+          // check moves, remove stars
+          if (moves == 12) {
+              starsSelector.innerHTML = buildStars(2);
+          } else if (moves == 24) {
+              starsSelector.innerHTML = buildStars(1);
+          }
           moveSelector.innerText = moves;
         }
       }
