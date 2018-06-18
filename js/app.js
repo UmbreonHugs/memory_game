@@ -35,6 +35,8 @@ var moves = 0;
 var moveSelector = document.querySelector('.moves');
 var stars = 3; // default star amount
 var starsSelector = document.querySelector('.stars');
+var seconds = 0;
+var timerElement = document.querySelector('.seconds-counter');
 
 function buildStars(n) {
   var starHTML = ``;
@@ -50,6 +52,11 @@ function loadGame() {
   deck.innerHTML = cardHTML.join('');
   moveSelector.innerText = moves;
   starsSelector.innerHTML = buildStars(3);
+  interval = setInterval(function() {
+      seconds++;
+      timerElement.innerText = seconds + "s";
+    }, 1000);
+
   //console.log(cardHTML)
 }
 function buildDeck(card) {
@@ -63,6 +70,10 @@ function resetGame() {
   openedIcons = [];
   moves = 0;
   stars = 3;
+  seconds = 0;
+  clearInterval(interval);
+  timerElement.innerText = "0s";
+  // load game and load event listener
   loadGame();
   cardEvent();
 }
