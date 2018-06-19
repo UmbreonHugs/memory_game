@@ -29,7 +29,6 @@ var cards = ['fa-diamond', 'fa-diamond', 'fa-paper-plane-o', 'fa-paper-plane-o',
 var openedCards = [];
 var openedIcons = [];
 var correctCards = 0;
-var totalClicks = 0;
 var gameStart = false;
 var deck = document.querySelector('.deck');
 var moves = 0;
@@ -74,7 +73,10 @@ function resetGame() {
   moves = 0;
   stars = 3;
   seconds = 0;
-  clearInterval(interval);
+  if (gameStart == true) {
+    clearInterval(interval);
+  }
+  gameStart = false;
   timerElement.innerText = "0s";
   // load game and load event listener
   loadGame();
@@ -86,7 +88,7 @@ function finishGame() {
   finishedStars = buildStars(stars);
   var modalHTML = `<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-lg modal-dialog-centered">
-    <div class="modal-content">
+    <div class="modal-content text-center">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLongTitle">Congrats!</h5>
       </div>
@@ -96,6 +98,7 @@ function finishGame() {
           ${finishedStars}
         </ul>
         <p>It took you ${seconds} seconds to complete the game!</p>
+        <button type="button" class="btn btn-primary btn-lg" onclick="resetGame()" data-dismiss="modal">Play again</button>
       </div>
     </div>
   </div>
