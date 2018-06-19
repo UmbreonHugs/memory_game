@@ -1,15 +1,3 @@
-/*
- * Create a list that holds all of your cards
- */
-
-
-/*
- * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
- *   - loop through each card and create its HTML
- *   - add each card's HTML to the page
- */
-
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
@@ -87,22 +75,22 @@ function resetGame() {
 function finishGame() {
   finishedStars = buildStars(stars);
   var modalHTML = `<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog modal-lg modal-dialog-centered">
-    <div class="modal-content text-center">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Congrats!</h5>
-      </div>
-      <div class="modal-body">
-        <h1>You have finished the game with ${moves} moves!</h1>
-        <ul class="finished-stars">
-          ${finishedStars}
-        </ul>
-        <p>It took you ${seconds} seconds to complete the game!</p>
-        <button type="button" class="btn btn-primary btn-lg" onclick="resetGame()" data-dismiss="modal">Play again</button>
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content text-center">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Congrats!</h5>
+        </div>
+        <div class="modal-body">
+          <h1>You have finished the game with ${moves} moves!</h1>
+          <ul class="finished-stars">
+            ${finishedStars}
+          </ul>
+          <p>It took you ${seconds} seconds to complete the game!</p>
+          <button type="button" class="btn btn-primary btn-lg" onclick="resetGame()" data-dismiss="modal">Play again</button>
+        </div>
       </div>
     </div>
-  </div>
-</div>`;
+  </div>`;
   $(modalHTML).modal({backdrop: 'static', keyboard: false});
     clearInterval(interval);
 }
@@ -158,18 +146,5 @@ function cardEvent() {
       });
   });
 }
-// if we have 8 matches, game is done
 loadGame();
 cardEvent();
-/*
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- */
-
-// display card
