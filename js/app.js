@@ -1,3 +1,17 @@
+// set default variables
+var cards = ['fa-diamond', 'fa-diamond', 'fa-paper-plane-o', 'fa-paper-plane-o', 'fa-anchor', 'fa-anchor', 'fa-bolt', 'fa-bolt', 'fa-cube', 'fa-cube', 'fa-leaf', 'fa-leaf', 'fa-bomb', 'fa-bomb', 'fa-bicycle', 'fa-bicycle']
+var openedCards = [];
+var openedIcons = [];
+var correctCards = 0;
+var gameStart = false;
+var deck = document.querySelector('.deck');
+var moves = 0;
+var moveSelector = document.querySelector('.moves');
+var stars = 3; // default star amount
+var starsSelector = document.querySelector('.stars');
+var seconds = 0;
+var timerElement = document.querySelector('.seconds-counter');
+
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
@@ -12,19 +26,6 @@ function shuffle(array) {
 
     return array;
 }
-// set default variables
-var cards = ['fa-diamond', 'fa-diamond', 'fa-paper-plane-o', 'fa-paper-plane-o', 'fa-anchor', 'fa-anchor', 'fa-bolt', 'fa-bolt', 'fa-cube', 'fa-cube', 'fa-leaf', 'fa-leaf', 'fa-bomb', 'fa-bomb', 'fa-bicycle', 'fa-bicycle']
-var openedCards = [];
-var openedIcons = [];
-var correctCards = 0;
-var gameStart = false;
-var deck = document.querySelector('.deck');
-var moves = 0;
-var moveSelector = document.querySelector('.moves');
-var stars = 3; // default star amount
-var starsSelector = document.querySelector('.stars');
-var seconds = 0;
-var timerElement = document.querySelector('.seconds-counter');
 
 function buildStars(n) {
   var starHTML = ``;
