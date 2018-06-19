@@ -53,12 +53,13 @@ function loadGame() {
   deck.innerHTML = cardHTML.join('');
   moveSelector.innerText = moves;
   starsSelector.innerHTML = buildStars(3);
+  //console.log(cardHTML)
+}
+function startTime() {
   interval = setInterval(function() {
       seconds++;
       timerElement.innerText = seconds + "s";
     }, 1000);
-
-  //console.log(cardHTML)
 }
 function buildDeck(card) {
   template = `<li class="card" data-icon="${card}"><i class="fa ${card}"></i></li>`
@@ -106,6 +107,10 @@ function cardEvent() {
   var cardsAll = document.querySelectorAll('.card');
   cardsAll.forEach(function(card) {
       card.addEventListener('click', function(e) {
+        if (gameStart == false) {
+          gameStart = true;
+          startTime();
+        }
         // prevent double clicking
         if (!card.classList.contains('open') && !card.classList.contains('show') && !card.classList.contains('match')) {
           card.classList.add('open', 'show', 'animated', 'flipInY');
@@ -121,6 +126,9 @@ function cardEvent() {
               openedCards[0].classList.add('match', 'open', 'show', 'animated', 'pulse');
               openedCards[1].classList.add('match', 'open', 'show', 'animated', 'pulse');
               correctCards += 1;
+              if (correctCards === 8) {
+                finishGame();
+              }
               openedCards = [];
             } else {
               openedCards[0].classList.add('animated', 'shake', 'wrong');
@@ -148,9 +156,6 @@ function cardEvent() {
   });
 }
 // if we have 8 matches, game is done
-if (correctCards == 8) {
-  finishGame()
-}
 loadGame();
 cardEvent();
 /*
