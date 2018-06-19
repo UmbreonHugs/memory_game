@@ -28,6 +28,7 @@ function shuffle(array) {
 var cards = ['fa-diamond', 'fa-diamond', 'fa-paper-plane-o', 'fa-paper-plane-o', 'fa-anchor', 'fa-anchor', 'fa-bolt', 'fa-bolt', 'fa-cube', 'fa-cube', 'fa-leaf', 'fa-leaf', 'fa-bomb', 'fa-bomb', 'fa-bicycle', 'fa-bicycle']
 var openedCards = [];
 var openedIcons = [];
+var correctCards = 0;
 var totalClicks = 0;
 var gameStart = false;
 var deck = document.querySelector('.deck');
@@ -68,6 +69,7 @@ function resetGame() {
   deck.innerHTML = "";
   openedCards = [];
   openedIcons = [];
+  correctCards = 0;
   moves = 0;
   stars = 3;
   seconds = 0;
@@ -77,7 +79,29 @@ function resetGame() {
   loadGame();
   cardEvent();
 }
-// remove the card from previous arrays
+
+// Finish Game
+function finishGame() {
+  finishedStars = buildStars(stars);
+  var modalHTML = `<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Congrats!</h5>
+      </div>
+      <div class="modal-body">
+        <h1>You have finished the game with ${moves} moves!</h1>
+        <ul class="finished-stars">
+          ${finishedStars}
+        </ul>
+        <p>It took you ${seconds} seconds to complete the game!</p>
+      </div>
+    </div>
+  </div>
+</div>`;
+  $(modalHTML).modal({backdrop: 'static', keyboard: false});
+    clearInterval(interval);
+}
 function cardEvent() {
   var cardsAll = document.querySelectorAll('.card');
   cardsAll.forEach(function(card) {
@@ -96,6 +120,7 @@ function cardEvent() {
             if (openedCards[0].dataset.icon == openedCards[1].dataset.icon) {
               openedCards[0].classList.add('match', 'open', 'show', 'animated', 'pulse');
               openedCards[1].classList.add('match', 'open', 'show', 'animated', 'pulse');
+              correctCards += 1;
               openedCards = [];
             } else {
               openedCards[0].classList.add('animated', 'shake', 'wrong');
@@ -111,14 +136,20 @@ function cardEvent() {
             // check moves, remove stars
             if (moves == 12) {
                 starsSelector.innerHTML = buildStars(2);
+                stars = 2;
             } else if (moves == 24) {
                 starsSelector.innerHTML = buildStars(1);
+                stars = 1;
             }
             moveSelector.innerText = moves;
           }
         }
       });
   });
+}
+// if we have 8 matches, game is done
+if (correctCards == 8) {
+  finishGame()
 }
 loadGame();
 cardEvent();
