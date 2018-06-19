@@ -109,7 +109,7 @@ function cardEvent() {
           openedCards.push(card);
           // check icon
           var firstCardType = openedCards[0].querySelector('i').classList.item(1);
-          console.log(firstCardType);
+          // console.log(firstCardType);
 
           if (openedCards.length == 2) {
               openedCards[1].classList.remove('animated', 'flipInY');
